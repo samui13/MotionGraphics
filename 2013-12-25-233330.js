@@ -122,12 +122,37 @@
     });
     App.animateFive = (function(){
 	var task0 = false;
-	App.textArr2.rotation.y = -Math.PI/2;
-	App.textArr.rotation.y = -Math.PI/2;
-	App.textArr2.position.x = 0;
-	App.textArr.position.x=0;
+	var task1 = false;
+	var task2 = false;
+	var task3 = false;
+	if(App.textArr2.rotation.y <= -Math.PI/2+0.5
+	  && App.textArr.rotation.y <=Math.PI/2-0.5){
+	    task0 = true;
+	}else{
+	    App.textArr2.rotation.y -= Math.PI/180*10;
+	    App.textArr.rotation.y -= Math.PI/180*10;
+	}
+	if(App.textArr2.position.x >= 0
+	  && App.textArr.position.x >= 0){
+	    task1 = true;
+	}else{
+	    App.textArr2.position.x += 100;
+	    App.textArr.position.x += 100;
+	}
 	
-	if(!task0){
+	if(App.textArr2.position.y <=200
+	  && App.textArr.position.y <= 200){
+	    task2 = true;
+	}else{
+	    App.textArr2.position.y -= 100;
+	    App.textArr.position.y -= 100;
+	}
+	if (App.camera.position.z <= 600){
+	    task3 = true;
+	}else{
+	    App.camera.position.z -= 50;
+	}
+	if(!task0 || !task1 || !task2 || !task3){
 	    App.renderer.render(App.scene,App.camera);
 	    cancelAnimationFrame(App.nowAnime);
 	    App.nowAnime = window.requestAnimationFrame(App.animateFive);
