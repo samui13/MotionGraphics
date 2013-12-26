@@ -2,7 +2,11 @@
     var word = [
 	'東中出身',
 	'涼宮ハルヒ',
-	'ただの人間には興味ありません。',
+	'ただの',
+	'人間',
+	'には',
+	'興味',
+	'ありません。',
 	'このなかに',
 	'宇宙人',
 	'未来人',
@@ -156,8 +160,50 @@
 	    App.renderer.render(App.scene,App.camera);
 	    cancelAnimationFrame(App.nowAnime);
 	    App.nowAnime = window.requestAnimationFrame(App.animateFive);
+	}else{
+	    
+	    cancelAnimationFrame(App.nowAnime);	
+	    App.AddWordFive();
+	    App.nowAnime = window.requestAnimationFrame(App.animateSix);
+	    
 	}
     });
+    App.animateSix = (function(){
+	var task0 = false;
+	var task1 = false;
+	//console.log(App.camera.position);
+	//App.textArr3.position
+	if(App.textArr3.position.x >=130){
+	    //App.AddWordSix();
+	    task0 = true;
+	    if (!App.textArr4){
+		App.AddWordSix();
+	    }
+	}else{
+	    App.textArr3.position.x += 120;
+	}
+	
+	if(task0 == true && App.textArr4.position.x >=130){
+	    console.log("H");
+	    task1 = true;
+	}else{
+	    if (App.textArr4)
+		App.textArr4.position.x += 150;
+	}
+	/*
+	App.camera.position.y = -1200;
+	App.camera.position.z = 1000;
+	App.camera.lookAt(new THREE.Vector3(180,50,10));
+	*/
+	if(!task0 || !task1){
+	    App.renderer.render(App.scene,App.camera);
+	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animateSix);
+	}else{
+	    cancelAnimationFrame(App.nowAnime);
+	}
+    });
+    
     App.sceneOne = (function(){
 	App.textArr = new THREE.Mesh(new THREE.TextGeometry( word[0], App.fontIni ), App.mat);
 	//App.textArr.position = new THREE.Vector3(-100,0,-10);
@@ -171,6 +217,27 @@
 	App.textArr2.position = new THREE.Vector3(-1*(App.width/10),30,100);
 	App.scene.add(App.textArr2);
     });
+
+    App.AddWordFive = (function(){
+	App.fontIni3 = App.fontIni;
+	App.fontIni3.size = 80;
+	App.textArr3 = new THREE.Mesh(new THREE.TextGeometry(word[2],App.fontIni3),App.mat);
+	//App.textArr3.position = new THREE.Vector3(180,50,300);
+	App.textArr3.position = new THREE.Vector3(-800,50,300);
+	App.textArr3.rotation.y = Math.PI/2-1.3;
+	App.scene.add(App.textArr3);
+    });
+
+    App.AddWordSix = (function(){
+	App.fontIni4 = App.fontIni;
+	App.fontIni4.size = 180;
+	App.textArr4 = new THREE.Mesh(new THREE.TextGeometry(word[3],App.fontIni4),App.mat);
+	//App.textArr4.position = new THREE.Vector3(180,-170,300);
+	App.textArr4.position = new THREE.Vector3(-800,-170,300);
+	App.textArr4.rotation.y = Math.PI/2-1.3;
+	App.scene.add(App.textArr4);
+    });
+
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 
     App.width = SCREEN_WIDTH;
