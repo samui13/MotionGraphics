@@ -94,21 +94,44 @@
     });
     App.animateFour = (function(){
 	var task3 = false;
-	if(App.camera.position.z >= 1000){
+	if(App.camera.position.z >= 1000
+	  && App.textArr2.rotation.z < -Math.PI/2+0.000000001
+	  && App.textArr.rotation.z < 0.000000001){
 	    task3 = true;
 	}else{
-	    App.camera.position.z =1100;
-	    console.log(App.camera.position);
-	    
-	    console.log(App.camera.position);
-	    App.textArr2.rotation.z = -Math.PI/2;
-	    console.log(App.textArr.rotation);
-	    App.textArr.rotation.z = 0;
+	    App.camera.position.z+=50;
+	    //App.camera.position.y-=10;
+	    App.textArr2.position.y+=40;
+	    App.textArr.position.y+=40;
+	    App.textArr2.rotation.z -= Math.PI/180*6;
+	    App.textArr.rotation.z -= Math.PI/180*6;
 	}
-	App.renderer.render(App.scene,App.camera);
-	cancelAnimationFrame(App.nowAnime);
-	App.nowAnime = window.requestAnimationFrame(App.animateFour);
+	if(task3 == false){
+	    App.renderer.render(App.scene,App.camera);
+	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animateFour);
+	}else{
+	    
+	    cancelAnimationFrame(App.nowAnime);
+	    App.Interval = setInterval((function(){
+		clearInterval(App.Interval);
+		App.nowAnime = window.requestAnimationFrame(App.animateFive);
+}),500);
+	}
 	
+    });
+    App.animateFive = (function(){
+	var task0 = false;
+	App.textArr2.rotation.y = -Math.PI/2;
+	App.textArr.rotation.y = -Math.PI/2;
+	App.textArr2.position.x = 0;
+	App.textArr.position.x=0;
+	
+	if(!task0){
+	    App.renderer.render(App.scene,App.camera);
+	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animateFive);
+	}
     });
     App.sceneOne = (function(){
 	App.textArr = new THREE.Mesh(new THREE.TextGeometry( word[0], App.fontIni ), App.mat);
