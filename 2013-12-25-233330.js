@@ -181,6 +181,7 @@
 	    task0 = true;
 	    if (!App.textArr4){
 		App.AddWordSix();
+		cancelAnimationFrame(App.nowAnime);
 	    }
 	}else{
 	    if(App.textArr3.position.x <=130)
@@ -202,22 +203,7 @@
 	    //console.log(App.camera.position);
 	    App.camera.position.y -= 10;
 	}
-	/*
-	if (task2 == true && App.textArr5.position.x >=320){
-	  //&& App.camera.position.y >= 100){
-	    //console.log(App.camera.position.y);
-	    task3 = true;
-	}else{
-	    //console.log(App.camera.position.y);
-	    //console.log(App.camera.position);
-	    if (App.textArr5 && App.textArr5.position.x <=320){
-		App.textArr5.position.x+=120;
-		App.camera.position.y+=40;
-	    
-	    }
 
-	}
-	*/
 	/*
 	App.camera.position.y = -1200;
 	App.camera.position.z = 1000;
@@ -234,7 +220,10 @@
 							App.camera.position.z);
 	    
 	    cancelAnimationFrame(App.nowAnime);
-	    App.nowAnime = window.requestAnimationFrame(App.animateSeven);
+		App.Interval = setInterval((function(){
+		    clearInterval(App.Interval);		    
+		    App.nowAnime = window.requestAnimationFrame(App.animateSeven);
+		}),300);
 	}
     });
     App.animateSeven = (function(){
@@ -256,18 +245,47 @@
 	}else{
 	    console.log(App.camera.position);
 	    cancelAnimationFrame(App.nowAnime);
+		App.Interval = setInterval((function(){
+		    clearInterval(App.Interval);		    
+		    App.nowAnime = window.requestAnimationFrame(App.animate0);
+		}),300);
 	    App.AddWord0();
-	    App.nowAnime = window.requestAnimationFrame(App.animate0);
 	}
     });
     App.animate0 = (function(){
 	var task0 = false;
-	//App.camera.position.x = 450;
+	if(App.camera.position.y <= -100 
+	  && App.camera.position.z >=600){
+	    task0 = true;
+	}else{
+	    App.camera.position.y-=10;
+	    App.camera.position.z+=10;
+	}
+	/*
+	  Goal
 	App.camera.position.y = -100;
 	App.camera.position.z = 600;
+	*/
+	if(!task0){
+	    App.renderer.render(App.scene,App.camera);
+	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animate0);
+	}else{
+	    App.AddWord1();
+	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animate1);
+	}
+    });
+    App.animate1 = (function(){
+	App.camera.position.y = -600;
+	App.camera.position.x = 150;
+	App.camera.position.z = 550;
+	App.camera.lookAt(new THREE.Vector3(180,50,10));
+	
 	App.renderer.render(App.scene,App.camera);
 	cancelAnimationFrame(App.nowAnime);
-	App.nowAnime = window.requestAnimationFrame(App.animate0);
+	App.nowAnime = window.requestAnimationFrame(App.animate1);
+
     });
     App.sceneOne = (function(){
 	App.textArr = new THREE.Mesh(new THREE.TextGeometry( word[0], App.fontIni ), App.mat);
@@ -277,7 +295,8 @@
     });
     App.AddWordTwo = (function(){
 	App.fontIni2 = App.fontIni;
-	App.fontIni2.size = 150;
+	//App.fontIni2.size = 150;
+	App.fontIni2.size = 100;
 	App.textArr2 = new THREE.Mesh(new THREE.TextGeometry(word[1],App.fontIni2),App.mat);
 	App.textArr2.position = new THREE.Vector3(-1*(App.width/10),30,100);
 	App.scene.add(App.textArr2);
@@ -326,6 +345,14 @@
 	//App.textArr6.rotation.y = 0;
 	App.scene.add(App.textArr6);
     });
+    App.AddWord1 = (function(){
+	App.fontIni7 = App.fontIni;
+	App.fontIni7.size = 50;
+	App.textArr7 = new THREE.Mesh(new THREE.TextGeometry(word[6],App.fontIni7),App.mat);
+	//App.textArr4.position = new THREE.Vector3(180,-170,300);
+	App.textArr7.position = new THREE.Vector3(180,-350,300);
+	App.scene.add(App.textArr7);
+    });
 
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 
@@ -349,7 +376,7 @@
     ]);
 
     App.fontIni = {
-      size: 40, curveSegments: 20, height:3,
+      size: 20, curveSegments: 20, height:3,
       font: 'abcdef',
       material:0, extrudeMaterial:1
     };
