@@ -272,14 +272,29 @@
 	    App.nowAnime = window.requestAnimationFrame(App.animate0);
 	}else{
 	    App.AddWord1();
+	    console.log(App.camera.position);
+	    console.log("H");
+	    console.log(App.camera.lookAt);
 	    cancelAnimationFrame(App.nowAnime);
 	    App.nowAnime = window.requestAnimationFrame(App.animate1);
 	}
     });
     App.animate1 = (function(){
-	App.camera.position.y = -600;
-	App.camera.position.x = 150;
-	App.camera.position.z = 550;
+	var task = false;
+	// {x: 460, y: -109, z: 721, constructor: function, set: function…}
+	if (App.camera.position.y <=-600
+	    && App.camera.position.x <=150){
+	    task = true;
+	    //console.log(App.camera.position);
+	}else{
+	    App.camera.position.y -= 10;
+	    App.camera.position.x -= 10;
+	    App.camera.position.z -=3; 
+	}
+	
+	//App.camera.position.y = -600;
+	//App.camera.position.x = 150;
+	//App.camera.position.z = 550;
 	App.camera.lookAt(new THREE.Vector3(180,50,10));
 	
 	App.renderer.render(App.scene,App.camera);
