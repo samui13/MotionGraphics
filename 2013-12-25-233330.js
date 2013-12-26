@@ -111,7 +111,7 @@
 	
     });
     App.sceneOne = (function(){
-	App.textArr = new THREE.Mesh(new THREE.TextGeometry( '東中出身', App.fontIni ), App.mat);
+	App.textArr = new THREE.Mesh(new THREE.TextGeometry( word[0], App.fontIni ), App.mat);
 	//App.textArr.position = new THREE.Vector3(-100,0,-10);
 	App.textArr.position = new THREE.Vector3(-1*(App.width/10),0,100);
 	App.scene.add(App.textArr);
@@ -119,15 +119,12 @@
     App.AddWordTwo = (function(){
 	App.fontIni2 = App.fontIni;
 	App.fontIni2.size = 150;
-	App.textArr2 = new THREE.Mesh(new THREE.TextGeometry('涼宮ハルヒ',App.fontIni2),App.mat);
+	App.textArr2 = new THREE.Mesh(new THREE.TextGeometry(word[1],App.fontIni2),App.mat);
 	App.textArr2.position = new THREE.Vector3(-1*(App.width/10),30,100);
 	App.scene.add(App.textArr2);
     });
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-    /*
-    App.width = 500;
-    App.height = 300;
-    */
+
     App.width = SCREEN_WIDTH;
     App.height = SCREEN_HEIGHT;
     // scene
