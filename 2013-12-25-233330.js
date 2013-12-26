@@ -171,37 +171,86 @@
     App.animateSix = (function(){
 	var task0 = false;
 	var task1 = false;
+	var task2 = false;
+	var task3 = false;
 	//console.log(App.camera.position);
 	//App.textArr3.position
-	if(App.textArr3.position.x >=130){
+	if(App.textArr3.position.x >=130
+	   && App.camera.position.x >= 150){
 	    //App.AddWordSix();
 	    task0 = true;
 	    if (!App.textArr4){
 		App.AddWordSix();
 	    }
 	}else{
-	    App.textArr3.position.x += 120;
+	    if(App.textArr3.position.x <=130)
+		App.textArr3.position.x += 120;
+	    App.camera.position.x += 20;
 	}
 	
-	if(task0 == true && App.textArr4.position.x >=130){
-	    console.log("H");
+	if (task0 == true && App.textArr4.position.x >=120 ){
 	    task1 = true;
 	}else{
 	    if (App.textArr4)
-		App.textArr4.position.x += 150;
+		App.textArr4.position.x += 140;
 	}
+	if(task0 == true && App.camera.position.y <= 0){
+	    task2 = true;
+	    if(!App.textArr5)
+		App.AddWordSeven();
+	}else{
+	    //console.log(App.camera.position);
+	    App.camera.position.y -= 10;
+	}
+	/*
+	if (task2 == true && App.textArr5.position.x >=320){
+	  //&& App.camera.position.y >= 100){
+	    //console.log(App.camera.position.y);
+	    task3 = true;
+	}else{
+	    //console.log(App.camera.position.y);
+	    //console.log(App.camera.position);
+	    if (App.textArr5 && App.textArr5.position.x <=320){
+		App.textArr5.position.x+=120;
+		App.camera.position.y+=40;
+	    
+	    }
+
+	}
+	*/
 	/*
 	App.camera.position.y = -1200;
 	App.camera.position.z = 1000;
 	App.camera.lookAt(new THREE.Vector3(180,50,10));
 	*/
-	if(!task0 || !task1){
+	if(!task0 || !task1 || !task2){
 	    App.renderer.render(App.scene,App.camera);
 	    cancelAnimationFrame(App.nowAnime);
 	    App.nowAnime = window.requestAnimationFrame(App.animateSix);
 	}else{
+	    App.temp = {};
+	    App.temp.cameraPosition = App.camera.position;
+	    
 	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animateSeven);
 	}
+    });
+    App.animateSeven = (function(){
+	var task0 = false;
+	if (App.camera.position.y >=120
+	  && App.textArr5.position.x >=350){
+	    task0 = true;
+	}else{
+	    App.textArr5.position.x+=60;
+	    App.camera.position.y+=8;
+	    App.camera.position.x+=10;
+	    App.camera.position.z-=5;
+	}
+	
+	App.renderer.render(App.scene,App.camera);
+	cancelAnimationFrame(App.nowAnime);
+	App.nowAnime = window.requestAnimationFrame(App.animateSeven);
+	
     });
     
     App.sceneOne = (function(){
@@ -220,24 +269,36 @@
 
     App.AddWordFive = (function(){
 	App.fontIni3 = App.fontIni;
-	App.fontIni3.size = 80;
+	App.fontIni3.size = 40;
 	App.textArr3 = new THREE.Mesh(new THREE.TextGeometry(word[2],App.fontIni3),App.mat);
 	//App.textArr3.position = new THREE.Vector3(180,50,300);
-	App.textArr3.position = new THREE.Vector3(-800,50,300);
-	App.textArr3.rotation.y = Math.PI/2-1.3;
+	App.textArr3.position = new THREE.Vector3(-800,100,300);
+	//App.textArr3.rotation.y = Math.PI/2-1.3;
+	App.textArr3.rotation.y = 0;
 	App.scene.add(App.textArr3);
     });
 
     App.AddWordSix = (function(){
 	App.fontIni4 = App.fontIni;
-	App.fontIni4.size = 180;
+	App.fontIni4.size = 130;
 	App.textArr4 = new THREE.Mesh(new THREE.TextGeometry(word[3],App.fontIni4),App.mat);
 	//App.textArr4.position = new THREE.Vector3(180,-170,300);
-	App.textArr4.position = new THREE.Vector3(-800,-170,300);
-	App.textArr4.rotation.y = Math.PI/2-1.3;
+	App.textArr4.position = new THREE.Vector3(-800,-50,300);
+	App.textArr4.rotation.y = 0;
 	App.scene.add(App.textArr4);
     });
 
+
+
+    App.AddWordSeven = (function(){
+	App.fontIni5 = App.fontIni;
+	App.fontIni5.size = 40;
+	App.textArr5 = new THREE.Mesh(new THREE.TextGeometry(word[4],App.fontIni5),App.mat);
+	App.textArr5.position = new THREE.Vector3(-800,100,300);
+	App.textArr5.rotation.y = 0;
+	App.scene.add(App.textArr5);
+    });
+    
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 
     App.width = SCREEN_WIDTH;
