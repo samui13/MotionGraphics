@@ -229,7 +229,9 @@
 	    App.nowAnime = window.requestAnimationFrame(App.animateSix);
 	}else{
 	    App.temp = {};
-	    App.temp.cameraPosition = App.camera.position;
+	    App.temp.cameraPosition = new THREE.Vector3(App.camera.position.x,
+							App.camera.position.y,
+							App.camera.position.z);
 	    
 	    cancelAnimationFrame(App.nowAnime);
 	    App.nowAnime = window.requestAnimationFrame(App.animateSeven);
@@ -237,6 +239,7 @@
     });
     App.animateSeven = (function(){
 	var task0 = false;
+	//console.log(App.temp.cameraPosition);
 	if (App.camera.position.y >=120
 	  && App.textArr5.position.x >=350){
 	    task0 = true;
@@ -246,13 +249,26 @@
 	    App.camera.position.x+=10;
 	    App.camera.position.z-=5;
 	}
-	
+	if(!task0){
+	    App.renderer.render(App.scene,App.camera);
+	    cancelAnimationFrame(App.nowAnime);
+	    App.nowAnime = window.requestAnimationFrame(App.animateSeven);
+	}else{
+	    console.log(App.camera.position);
+	    cancelAnimationFrame(App.nowAnime);
+	    App.AddWord0();
+	    App.nowAnime = window.requestAnimationFrame(App.animate0);
+	}
+    });
+    App.animate0 = (function(){
+	var task0 = false;
+	//App.camera.position.x = 450;
+	App.camera.position.y = -100;
+	App.camera.position.z = 600;
 	App.renderer.render(App.scene,App.camera);
 	cancelAnimationFrame(App.nowAnime);
-	App.nowAnime = window.requestAnimationFrame(App.animateSeven);
-	
+	App.nowAnime = window.requestAnimationFrame(App.animate0);
     });
-    
     App.sceneOne = (function(){
 	App.textArr = new THREE.Mesh(new THREE.TextGeometry( word[0], App.fontIni ), App.mat);
 	//App.textArr.position = new THREE.Vector3(-100,0,-10);
@@ -299,6 +315,18 @@
 	App.scene.add(App.textArr5);
     });
     
+
+
+
+    App.AddWord0 = (function(){
+	App.fontIni6 = App.fontIni;
+	App.fontIni6.size = 130;
+	App.textArr6 = new THREE.Mesh(new THREE.TextGeometry(word[5],App.fontIni6),App.mat);
+	App.textArr6.position = new THREE.Vector3(180,-250,300);
+	//App.textArr6.rotation.y = 0;
+	App.scene.add(App.textArr6);
+    });
+
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
 
     App.width = SCREEN_WIDTH;
