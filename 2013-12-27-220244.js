@@ -23,7 +23,7 @@
 	    this.scene.add(this.ambient);
 	    this.scene.add(this.helper);
 	    document.getElementById('stage').appendChild(this.renderer.domElement);
-	    this.renderer.render(this.scene,this.camera);
+	    //this.renderer.render(this.scene,this.camera);
 	}),
 	'fontInfo': {
 	    'size':40,
@@ -39,14 +39,14 @@
 	    this.cube = new THREE.Mesh(this.geometry,this.material);
 	    this.cube.position = new THREE.Vector3(0,0,0);
 	    this.scene.add(this.cube);
-	    this.renderer.render(this.scene,this.camera);
+	    //this.renderer.render(this.scene,this.camera);
 	}),
 	
     };
+    App.initRender();
+    App.initObject();
+    App.renderer.render(App.scene,App.camera);
+
     $(document).ready(function(){
-	App.initRender();
-	App.initObject();
-	
-	App.renderer.render(App.scene,App.camera);
     });
 })();
