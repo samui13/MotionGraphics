@@ -327,6 +327,7 @@
 		     t.scale.z = 0.0;
 		     App.scene.add(t); 
 		 }));
+
     // 18
     motions.push(new TWEEN.Tween(App.camera.position)
 		 .to({y:-220},500)
